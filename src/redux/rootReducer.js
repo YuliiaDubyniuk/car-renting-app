@@ -1,22 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchAllCars } from './operations';
 
 const INITIAL_STATE = {
   cars: [],
-  favorite: [],
+  favoriteCars: [],
   isLoading: false,
   error: null,
 };
 
 const carsSlice = createSlice({
-    name: 'water',
+    name: 'cars',
     initialState: INITIAL_STATE,
     extraReducers: (builder) =>
         builder
-            // .addCase(todayWaterThunk.fulfilled, (state, action) => {
-            //     state.isLoading = false;
-            //     state.todayWaterConsumption = action.payload;
-            //     state.error = null;
-            // })
+        .addCase(fetchAllCars.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllCars.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.cars = action.payload;
+      })
+      .addCase(fetchAllCars.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
   })
 
   export const rootReducer = carsSlice.reducer;

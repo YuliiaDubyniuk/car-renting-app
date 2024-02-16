@@ -3,9 +3,9 @@ import { Suspense, lazy } from 'react';
 import Header from './components/Header/Header';
 import Loader from './components/Loader/Loader';
 
-const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
-const CatalogPage = lazy(() => import('./pages/CatalogPage/CatalogPage'));
-const FavoritePage = lazy(() => import('./pages/FavoritePage/FavoritePage'));
+const HomePage = lazy(() => import('/src/pages/HomePage/HomePage'));
+const CatalogPage = lazy(() => import('/src/pages/CatalogPage/CatalogPage'));
+const FavoritePage = lazy(() => import('/src/pages/FavoritePage/FavoritePage'));
 
 const appRoutes = [
   { path: '/', element: <HomePage/> },
