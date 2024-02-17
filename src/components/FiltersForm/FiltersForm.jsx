@@ -1,4 +1,19 @@
+import { useSelector } from "react-redux";
+import {
+  StyledBtn,
+  StyledFilter,
+  StyledFirstInput,
+  StyledForm,
+  StyledLabel,
+  StyledName,
+  StyledSecondInput,
+  StyledSelect,
+  StyledSpan,
+  StyledText,
+} from "./FiltersForm.styled";
 import makes from "/src/data/makes.json";
+import { useEffect, useState } from "react";
+import { selectCars } from "/src/redux/cars/selectors";
 
 const prices = [];
 for (let i = 30; i <= 200; i += 10) {
@@ -6,19 +21,33 @@ for (let i = 30; i <= 200; i += 10) {
 }
 
 const FiltersForm = () => {
-  function updateSelectedOption() {
-    const select = document.getElementById("price");
-    const selectedOption = select.options[select.selectedIndex];
-    if (selectedOption.value !== "default") {
-      selectedOption.text = `To ${selectedOption.value}$`;
-    }
-  }
+
+  const [selectedMake, setSelectedMake] = useState(null);
+  const [selectedPrice, setSelectedPrice] = useState(null);
+  const [selectedMinMileage, setSelectedMinMileage] = useState(null);
+  const [selectedMaxMileage, setSelectedMaxMileage] = useState(null);
+
+  const [filteredCars, setFilteredCars] = useState(null);
+
+  const cars = useSelector(selectCars);
+
+  useEffect(() => {    
+    const filtered = cars.filter(car => {
+      return (
+        (!selectedMake || car.make === selectedMake) &&
+        (!selectedPrice || car.price <= selectedPrice) &&
+        (!selectedMinMileage || car.mileage >= selectedMinMileage) &&
+        (!selectedMaxMileage || car.mileage <= selectedMaxMileage)
+      );
+    });
+    setFilteredCars(filtered);
+  }, [cars, selectedMake, selectedPrice, selectedMinMileage, selectedMaxMileage]);
 
   return (
-    <form>
-      <p>Car brand</p>
-      <label>
-        <select id="brand" defaultValue="default">
+    <StyledForm>
+      <StyledFilter>
+        <StyledName>Car brand</StyledName>
+        <StyledSelect id="brand" defaultValue="default" onChange={(e) => setSelectedMake(e.target.value)}>
           <option disabled value="default">
             Enter the text
           </option>
@@ -27,15 +56,15 @@ const FiltersForm = () => {
               {brandName}
             </option>
           ))}
-        </select>
-      </label>
+        </StyledSelect>
+      </StyledFilter>
 
-      <p>Price/1 hour</p>
-      <label>
-        <select
+      <StyledFilter>
+        <StyledName>Price/1 hour</StyledName>
+        <StyledSelect
           id="price"
           defaultValue="default"
-          onChange={updateSelectedOption}
+          onChange={(e) => setSelectedPrice(e.target.value)}
         >
           <option disabled value="default">
             To $
@@ -45,21 +74,22 @@ const FiltersForm = () => {
               {price}
             </option>
           ))}
-        </select>
-      </label>
+        </StyledSelect>
+      </StyledFilter>
 
-      <p>Car mileage/km</p>
-      <label>
-        <span>From</span>
-        <input type="number" />
-      </label>
-      <label>
-        <span>To</span>
-        <input type="number" />
-      </label>
-
-      <button type="submit">Search</button>
-    </form>
+      <div>
+        <StyledText>Car mileage/km</StyledText>
+        <StyledLabel>
+          <StyledSpan>From</StyledSpan>
+          <StyledFirstInput type="number" onChange={(e) => setSelectedMinMileage(e.target.value)}/>
+        </StyledLabel>
+        <StyledLabel>
+          <StyledSpan>To</StyledSpan>
+          <StyledSecondInput type="number" onChange={(e) => setSelectedMaxMileage(e.target.value)}/>
+        </StyledLabel>
+      </div>
+      <StyledBtn type="submit">Search</StyledBtn>
+    </StyledForm>
   );
 };
 

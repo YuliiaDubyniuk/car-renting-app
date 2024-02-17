@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import Header from './components/Header/Header';
 import Loader from './components/Loader/Loader';
+import { AppContainer } from './App.styled';
 
 const HomePage = lazy(() => import('/src/pages/HomePage/HomePage'));
 const CatalogPage = lazy(() => import('/src/pages/CatalogPage/CatalogPage'));
@@ -18,14 +19,16 @@ function App() {
   
  return (
    <>
-    <Header /> 
+     <Header />
+     <AppContainer>
     <Suspense fallback={<Loader />}>
       <Routes>
         {appRoutes.map(({ path, element }) => (
           <Route key={path} path={path} element={element} />
         ))}
       </Routes>
-    </Suspense>
+       </Suspense>
+       </AppContainer>
     </>
   )
 }

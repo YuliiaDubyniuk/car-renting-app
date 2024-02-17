@@ -7,7 +7,7 @@ const Header = () => {
     <nav>
       <StyledLogo to="/">
         <img src={logo} alt="Logo" width={100}/>
-        <p>CarRent</p>
+        <p>CarRental</p>
       </StyledLogo>     
      <StyledLink to="/catalog">Catalog</StyledLink>
      <StyledLink to="/favorites">Favorites</StyledLink>
