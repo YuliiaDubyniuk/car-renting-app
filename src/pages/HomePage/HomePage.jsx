@@ -1,10 +1,15 @@
-import React from 'react';
+import { StyledBtn, StyledQuest, StyledQuestion, StyledResp, StyledWrapper } from './HomePage.styled';
+
 
 const HomePage = () => {
   return (
-    <div>
-      <p>Home page</p>
-    </div>
+    <>
+      <StyledWrapper></StyledWrapper>
+      <StyledQuestion>Going somewhere?</StyledQuestion>
+      <StyledQuest>Need a car?</StyledQuest>
+      <StyledResp>We can help!</StyledResp>
+      <StyledBtn to="/catalog">Choose car</StyledBtn>
+    </>
   )
 }
 

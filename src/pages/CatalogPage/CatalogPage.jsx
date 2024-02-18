@@ -6,19 +6,16 @@ import { fetchAllCars } from '/src/redux/cars/operations.js';
 import CardsList from '/src/components/CardsList/CardsList';
 
 
+
 const CatalogPage = () => {
-  const page = useSelector(selectPage);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllCars(page));
-  }, [dispatch, page]);
-
+ 
   return (
-    <>
+    
+    <div>
       <FiltersForm /> 
       <CardsList/>
-    </>
+      </div>
+  
   )
 }
 

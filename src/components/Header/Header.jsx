@@ -1,4 +1,4 @@
-import logo from '/src/images/car-logo.png';
+import logo from '/src/images/car.png';
 import { StyledHeader, StyledLink, StyledLogo } from './Header.styled';
 
 const Header = () => {

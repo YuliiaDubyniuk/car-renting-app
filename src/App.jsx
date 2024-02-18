@@ -6,12 +6,12 @@ import { AppContainer } from './App.styled';
 
 const HomePage = lazy(() => import('/src/pages/HomePage/HomePage'));
 const CatalogPage = lazy(() => import('/src/pages/CatalogPage/CatalogPage'));
-const FavoritePage = lazy(() => import('/src/pages/FavoritePage/FavoritePage'));
+const FavoritesPage = lazy(() => import('/src/pages/FavoritesPage/FavoritesPage'));
 
 const appRoutes = [
   { path: '/', element: <HomePage/> },
   { path: '/catalog', element: <CatalogPage /> },
-  { path: '/favorites', element: <FavoritePage /> },
+  { path: '/favorites', element: <FavoritesPage /> },
   { path: '/*',  element: <Navigate to='/' replace={true}/>}
 ]
 

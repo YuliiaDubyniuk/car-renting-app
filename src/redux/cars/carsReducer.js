@@ -1,21 +1,11 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { fetchAllCars, fetchCarById } from "./operations";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchAllCars } from "./operations";
 
 const INITIAL_STATE = {
   cars: [],
   page: 1,
   isLoading: false,
   error: null,
-};
-
-const handlePending = (state) => {
-  state.isLoading = true;
-  state.error = null;
-};
-
-const handleRejected = (state, action) => {
-  state.isLoading = false;
-  state.error = action.payload;
 };
 
 const carsSlice = createSlice({
@@ -33,19 +23,15 @@ const carsSlice = createSlice({
         state.error = null;
         state.cars.push(...action.payload);
       })
-      .addCase(fetchCarById.fulfilled, (state, action) => {
-        state.isLoading = false;
+      
+      .addCase(fetchAllCars.pending, (state) => {
+        state.isLoading = true;
         state.error = null;
-        state.currentCar = action.payload;
       })
-      .addMatcher(
-        isAnyOf(fetchAllCars.pending, fetchAllCars.pending),
-        handlePending
-      )
-      .addMatcher(
-        isAnyOf(fetchCarById.rejected, fetchCarById.rejected),
-        handleRejected
-      ),
+      .addCase(fetchAllCars.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 });
 
 export const { addPage } = carsSlice.actions;

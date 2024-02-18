@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   StyledBtn,
   StyledFilter,
@@ -13,7 +13,8 @@ import {
 } from "./FiltersForm.styled";
 import makes from "/src/data/makes.json";
 import { useEffect, useState } from "react";
-import { selectCars } from "/src/redux/cars/selectors";
+import { fetchAllCars } from "/src/redux/cars/operations";
+
 
 const prices = [];
 for (let i = 30; i <= 200; i += 10) {
@@ -21,33 +22,42 @@ for (let i = 30; i <= 200; i += 10) {
 }
 
 const FiltersForm = () => {
+  
+  const [filters, setFilters] = useState({
+    brand: "",
+    rentalPrice: "",
+    minMileage: "",
+    maxMileage: ""
+  });
 
-  const [selectedMake, setSelectedMake] = useState(null);
-  const [selectedPrice, setSelectedPrice] = useState(null);
-  const [selectedMinMileage, setSelectedMinMileage] = useState(null);
-  const [selectedMaxMileage, setSelectedMaxMileage] = useState(null);
+  const dispatch = useDispatch();
 
-  const [filteredCars, setFilteredCars] = useState(null);
+  const handleChange = (evt) => {
+    const { id, value } = evt.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [id]: value
+    }));
+  };
 
-  const cars = useSelector(selectCars);
-
-  useEffect(() => {    
-    const filtered = cars.filter(car => {
-      return (
-        (!selectedMake || car.make === selectedMake) &&
-        (!selectedPrice || car.price <= selectedPrice) &&
-        (!selectedMinMileage || car.mileage >= selectedMinMileage) &&
-        (!selectedMaxMileage || car.mileage <= selectedMaxMileage)
-      );
+  useEffect(() => {
+    const params = new URLSearchParams()
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) {
+        params.append(key, value);
+      } else {
+        params.delete(key);
+      }
     });
-    setFilteredCars(filtered);
-  }, [cars, selectedMake, selectedPrice, selectedMinMileage, selectedMaxMileage]);
+    dispatch(fetchAllCars(params.toString()));
+  }, [dispatch, filters]);
+
 
   return (
     <StyledForm>
       <StyledFilter>
         <StyledName>Car brand</StyledName>
-        <StyledSelect id="brand" defaultValue="default" onChange={(e) => setSelectedMake(e.target.value)}>
+        <StyledSelect id="brand" value={filters.brand} onChange={handleChange}>
           <option disabled value="default">
             Enter the text
           </option>
@@ -62,9 +72,9 @@ const FiltersForm = () => {
       <StyledFilter>
         <StyledName>Price/1 hour</StyledName>
         <StyledSelect
-          id="price"
-          defaultValue="default"
-          onChange={(e) => setSelectedPrice(e.target.value)}
+          id="rentalPrice"
+          value={filters.rentalPrice}
+          onChange={handleChange}
         >
           <option disabled value="default">
             To $
@@ -81,11 +91,11 @@ const FiltersForm = () => {
         <StyledText>Car mileage/km</StyledText>
         <StyledLabel>
           <StyledSpan>From</StyledSpan>
-          <StyledFirstInput type="number" onChange={(e) => setSelectedMinMileage(e.target.value)}/>
+          <StyledFirstInput id="minMileage" type="number" value={filters.minMileage } onChange={handleChange}/>
         </StyledLabel>
         <StyledLabel>
           <StyledSpan>To</StyledSpan>
-          <StyledSecondInput type="number" onChange={(e) => setSelectedMaxMileage(e.target.value)}/>
+          <StyledSecondInput id="maxMileage" type="number" value={filters.maxMileage } onChange={handleChange}/>
         </StyledLabel>
       </div>
       <StyledBtn type="submit">Search</StyledBtn>

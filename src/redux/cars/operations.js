@@ -4,9 +4,9 @@ import { requestCars } from '/src/services/api';
 
 export const fetchAllCars = createAsyncThunk(
   'cars/getAll',
-  async (page, thunkAPI) => {
+  async (params, thunkAPI) => {
     try {     
-      const cars = await requestCars(page);
+      const cars = await requestCars(params);
       return cars;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -14,14 +14,3 @@ export const fetchAllCars = createAsyncThunk(
   }
 );
 
-export const fetchCarById = createAsyncThunk(
-  'cars/getById',
-  async (id, thunkAPI) => {
-    try {     
-      const cars = await requestCars(id);
-      return cars;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);

@@ -4,11 +4,9 @@ export const StyledForm = styled.form`
   display: flex;
   gap: 18px;
   justify-content: center;
-
-  button:hover {
-   background-color: #0B44CD;
-}
+  margin-bottom:50px;
 `;
+
 export const StyledFilter = styled.label`
   display: flex;
   flex-direction: column;
@@ -30,7 +28,8 @@ export const StyledText = styled.p`
 `;
 
 const StyledSelectOption = css`
-  padding: 14px;
+  
+  height: 48px;
   font-size: 18px;
   line-height: 1.1;
   color: #121417;
@@ -39,11 +38,13 @@ const StyledSelectOption = css`
 `;
 export const StyledSelect = styled.select`
   ${StyledSelectOption}
+  padding: 11px;
   border-radius: 14px;
 `;
 
 export const StyledFirstInput = styled.input`
   ${StyledSelectOption}
+  padding: 14px;
   width: 71px;
   border-right: 1px solid rgba(138, 138, 137, 0.2);
   border-radius: 14px 0 0 14px;
@@ -57,9 +58,11 @@ export const StyledFirstInput = styled.input`
 export const StyledSecondInput = styled.input`
   ${StyledSelectOption}
   width: 96px;
+  padding: 14px;
   border-radius: 0 14px 14px 0;
   padding-left: 50px;
 `;
+
 export const StyledLabel = styled.label`
   position: relative;
 `;
@@ -85,5 +88,9 @@ background-color: #3470FF;
 border: 0;
 border-radius: 14px;
 transition: background-color ease-in-out 250ms;
+
+&:hover{
+    background-color: #0B44CD;
+  }
 
 `
