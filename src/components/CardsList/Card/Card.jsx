@@ -48,11 +48,9 @@ const Card = ({ car }) => {
 
     if (!isFavorite) {
     dispatch(addCar(car));
-  } else {
+  } 
     dispatch(deleteCar(car.id));
-    }
     
-    console.log(favorites);
   }
   
   const handleClick = () => {

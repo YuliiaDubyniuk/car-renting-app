@@ -18,6 +18,7 @@ export const StyledBtn = styled.ul`
   text-decoration: underline;
   background-color: transparent;
   border: none;
+  transition: color ease-in-out 250ms;
 
   &:hover {
     color: #0B44CD;

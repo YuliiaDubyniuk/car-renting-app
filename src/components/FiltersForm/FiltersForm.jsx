@@ -22,12 +22,12 @@ for (let i = 30; i <= 200; i += 10) {
 }
 
 const FiltersForm = () => {
-  
+ 
   const [filters, setFilters] = useState({
     brand: "",
     rentalPrice: "",
-    minMileage: "",
-    maxMileage: ""
+    // minMileage: "",
+    // maxMileage: "",
   });
 
   const dispatch = useDispatch();

@@ -56,9 +56,10 @@ export const StyledBtn = styled(Link)`
   background-color: #3470FF;
   border: 0;
   border-radius: 50%;
+  transition: background-color ease-in-out 250ms;
 
- :hover{
-  background-color: #ffffff;
+ &:hover{
+  background-color: #0B44CD;
  }
 
 `

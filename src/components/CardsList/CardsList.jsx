@@ -17,8 +17,7 @@ const CardsList = () => {
   }
 
   return (
-    <>
-      
+    <>      
         {isLoading && <Loader />}
         <StyledList>
           {cars &&
@@ -26,10 +25,9 @@ const CardsList = () => {
               return <Card key={car.id} car={car} />;
             })}
         </StyledList>
-        <StyledBtn type="button" onClick={handleBtnClick}>
-          Load more
-        </StyledBtn>
-      
+      {!isLoading && <StyledBtn type="button" onClick={handleBtnClick}>
+        Load more
+      </StyledBtn>}      
     </>
   );
 };

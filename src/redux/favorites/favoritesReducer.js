@@ -8,11 +8,9 @@ const favoritesSlice = createSlice({
     reducers: {
     addCar(state, action) {
       state.push(action.payload);
-      return state;
         },
     deleteCar(state, action) {
-      state.filter(car => car.id !== action.payload);
-      return state;
+      state = state.filter(car => car.id !== action.payload);
     },
   },
 });

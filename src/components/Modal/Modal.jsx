@@ -2,8 +2,7 @@ import { StyledBackdrop } from './Modal.styled';
 import Cross from '/src/images/Cross';
 import { useEffect } from 'react'
 
-const Modal = ({ onClose, car }) => {
-    
+const Modal = ({ onClose, car }) => {    
     const {
     id,
     make,
@@ -84,40 +83,40 @@ const Modal = ({ onClose, car }) => {
           <div>
             {accessories.map((item, i) => {
               return (
-                <span key={i}>
+                <p key={i}>
                   {item}
-                </span>
+                </p>
               );
             })}
           </div>
           <div>
             {functionalities.map((item, i) => {
               return (
-                <span key={i}>
+                <p key={i}>
                   {item}
-                </span>
+                </p>
               );
             })}
           </div>
           <h4>Rental Conditions: </h4>
           <div>
-            <span>
+            <p>
               {rentalConditions[0].split(":")[0]}:{" "}
               <span>{rentalConditions[0].split(":")[1]}</span>
-            </span>
-            <span>{rentalConditions[1]}</span>
+            </p>
+            <p>{rentalConditions[1]}</p>
           </div>
           <div>
-            <span>{rentalConditions[2]}</span>
-            <span className={css.conditionsItem}>
+            <p>{rentalConditions[2]}</p>
+            <p>
               Mileage:{" "}
-              <span>
+              <p>
                 {new Intl.NumberFormat("en-US").format(mileage)}
-              </span>
-            </span>
-            <span>
+              </p>
+            </p>
+            <p>
               Price: <span>{rentalPrice}$</span>
-            </span>
+            </p>
           </div>
 
           <a href="tel:+380730000000">
