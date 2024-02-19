@@ -6,8 +6,6 @@ export default defineConfig({
   resolve: {
     alias: {
       src: '/src',
-      components: '/src/components',
-      pages: '/src/pages',
     },
   },
   base: '/car-renting-app/',
