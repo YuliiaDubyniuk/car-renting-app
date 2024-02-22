@@ -1,4 +1,4 @@
-import{u as e,a as r,L as n,j as t}from"./index-J8PEUd-_.js";const a="/car-renting-app/assets/car-photo-XevdJCDB.jpg",i=e.div`
+import{u as e,a as r,L as n,j as t}from"./index-BKBQsnFk.js";const a="/car-renting-app/assets/car-photo-XevdJCDB.jpg",i=e.div`
   position: absolute;
   top: 78px;
   left: 0;
