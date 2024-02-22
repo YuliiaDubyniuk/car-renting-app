@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   StyledBtn,
   StyledFilter,
@@ -7,41 +7,46 @@ import {
   StyledLabel,
   StyledName,
   StyledSecondInput,
-  StyledSelect,
   StyledSpan,
   StyledText,
 } from "./FiltersForm.styled";
-import makes from "/src/data/makes.json";
 import { useEffect, useState } from "react";
 import { fetchAllCars } from "/src/redux/cars/operations";
-
+import makes from "/src/data/makes.json";
+import Dropdown from "./Dropdown/Dropdown";
 
 const prices = [];
-for (let i = 30; i <= 200; i += 10) {
+for (let i = 30; i <= 500; i += 10) {
   prices.push(i);
 }
 
 const FiltersForm = () => {
- 
   const [filters, setFilters] = useState({
     brand: "",
-    rentalPrice: "",
-    // minMileage: "",
-    // maxMileage: "",
+    price: "",
+    minMileage: "",
+    maxMileage: "",
   });
 
-  const dispatch = useDispatch();
-
-  const handleChange = (evt) => {
-    const { id, value } = evt.target;
+  const handleFilterSelect = (id, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      [id]: value
+      [id]: value,
     }));
   };
 
-  useEffect(() => {
-    const params = new URLSearchParams()
+  const handleChange = (evt) => {
+    const { id, value } = evt.target;
+    setFilters((filters) => ({
+      ...filters,
+      [id]: value.toString(),
+    }));
+  };
+
+   const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    const params = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
       if (value) {
         params.append(key, value);
@@ -49,53 +54,53 @@ const FiltersForm = () => {
         params.delete(key);
       }
     });
-    dispatch(fetchAllCars(params.toString()));
-  }, [dispatch, filters]);
-
+  };
 
   return (
-    <StyledForm>
+    <StyledForm onSubmit={handleSubmit}>
       <StyledFilter>
         <StyledName>Car brand</StyledName>
-        <StyledSelect id="brand" value={filters.brand} onChange={handleChange}>
-          <option disabled value="default">
-            Enter the text
-          </option>
-          {makes.map((brandName) => (
-            <option key={brandName} value={brandName}>
-              {brandName}
-            </option>
-          ))}
-        </StyledSelect>
+        <Dropdown
+          options={makes}
+          onSelect={(selectedBrand) =>
+            handleFilterSelect("brand", selectedBrand)
+          }
+          placeholder={"Enter the text"}
+          width="224px"
+        />
       </StyledFilter>
 
       <StyledFilter>
         <StyledName>Price/1 hour</StyledName>
-        <StyledSelect
-          id="rentalPrice"
-          value={filters.rentalPrice}
-          onChange={handleChange}
-        >
-          <option disabled value="default">
-            To $
-          </option>
-          {prices.map((price) => (
-            <option key={price} value={price}>
-              {price}
-            </option>
-          ))}
-        </StyledSelect>
+        <Dropdown
+          options={prices}
+          onSelect={(selectedPrice) =>
+            handleFilterSelect("price", `To ${selectedPrice}$`)
+          }
+          placeholder={"To $"}
+          width="125px"
+        />
       </StyledFilter>
 
       <div>
         <StyledText>Car mileage/km</StyledText>
         <StyledLabel>
           <StyledSpan>From</StyledSpan>
-          <StyledFirstInput id="minMileage" type="number" value={filters.minMileage } onChange={handleChange}/>
+          <StyledFirstInput
+            id="minMileage"
+            type="number"
+            value={filters.minMileage}
+            onChange={handleChange}
+          />
         </StyledLabel>
         <StyledLabel>
           <StyledSpan>To</StyledSpan>
-          <StyledSecondInput id="maxMileage" type="number" value={filters.maxMileage } onChange={handleChange}/>
+          <StyledSecondInput
+            id="maxMileage"
+            type="number"
+            value={filters.maxMileage}
+            onChange={handleChange}
+          />
         </StyledLabel>
       </div>
       <StyledBtn type="submit">Search</StyledBtn>

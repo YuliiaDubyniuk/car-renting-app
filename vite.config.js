@@ -8,5 +8,5 @@ export default defineConfig({
       src: '/src',
     },
   },
-  base: '/car-renting-app/',
+  base: '/car-renting-app',
 })

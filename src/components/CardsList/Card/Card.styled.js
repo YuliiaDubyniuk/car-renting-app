@@ -46,7 +46,7 @@ export const StyledTitle = styled.p`
 
 export const StyledInfoWrapper = styled.p`
   display: flex;
-  flex-wrap: no-wrap;
+  flex-wrap: wrap;
   margin-bottom: 4px;
 
   & :first-child {

@@ -33,15 +33,11 @@ const Card = ({ car }) => {
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const favorites = useSelector(selectFavorites);
   const dispatch = useDispatch();
 
   const addressParts = address.split(",");
   const city = addressParts[1];
   const country = addressParts[2];
-  const companyNameParts = rentalCompany.split(" ");
-  const company = `${companyNameParts[0]} ${companyNameParts[1]}`;
-  const carModel = model.split(" ").length > 2 ? `${model.split(" ")[0]} ${model.split(" ")[1]}` : model;
   
   const handleFavorite = () => {
     setIsFavorite(!isFavorite);
@@ -54,7 +50,7 @@ const Card = ({ car }) => {
   }
   
   const handleClick = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsModalOpen(true);
   }
 
   return (
@@ -67,21 +63,21 @@ const Card = ({ car }) => {
       </StyledThumb>
       <StyledTitleWrapper>
         <StyledTitle>
-          {make}&nbsp;<span>{carModel}</span>, {year}{" "}
+          {make}&nbsp;<span>{model}</span>, {year}{" "}
         </StyledTitle>
         <p>{rentalPrice}</p>
       </StyledTitleWrapper>
       <StyledInfoWrapper>
         <StyledInfo>{city}</StyledInfo>
         <StyledInfo>{country}</StyledInfo>
-        <StyledInfo>{company}</StyledInfo>
+        <StyledInfo>{rentalCompany}</StyledInfo>
         <StyledInfo>Premium</StyledInfo>
       </StyledInfoWrapper>
       <StyledInfoWrapper>
         <StyledInfo>{type}</StyledInfo>
-        <StyledInfo>{carModel}</StyledInfo>
+        <StyledInfo>{model}</StyledInfo>
         <StyledInfo>{mileage}</StyledInfo>
-        <StyledInfo>{accessories[0].length > 10 ? `${accessories[0].slice(0, 12)}... `: accessories[0] }</StyledInfo>
+        <StyledInfo>{accessories[0]}</StyledInfo>
       </StyledInfoWrapper>
       <StyledMoreBtn type="button" onClick={handleClick}>Learn more</StyledMoreBtn>
       {isModalOpen && <Modal onClose={handleClick} data={car} />}
